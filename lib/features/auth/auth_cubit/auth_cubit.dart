@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/features/auth/view_models/login_data.dart';
@@ -13,6 +14,9 @@ part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit() : super(AuthInitial());
+
+  static AuthCubit get(BuildContext context) => BlocProvider.of(context);
+
   CollectionReference videosCollection =
       FirebaseFirestore.instance.collection('videos');
   CollectionReference doctorCollection =
@@ -32,9 +36,9 @@ class AuthCubit extends Cubit<AuthState> {
           .createUserWithEmailAndPassword(
               email: registerData.email, password: registerData.password);
       final uId = userCredential.user!.uid;
-     final userModel = UserModel(name: registerData.name, uId: uId);
+      final userModel = UserModel(name: registerData.name, uId: uId);
       await userCollection.doc(uId).set(userModel.toJson());
-     await getUser();
+      await getUser();
       emit(AuthSuccess());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -122,5 +126,4 @@ class AuthCubit extends Cubit<AuthState> {
     getDoctorsList();
     return isUser;
   }
-
 }

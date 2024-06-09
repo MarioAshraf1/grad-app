@@ -1,24 +1,37 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MessageModel {
-  late  String message;
-  late  DateTime date;
-  late  String uId;
+  final String message;
+  final DateTime date;
+  final String uId;
+  final String messageId;
+  final String senderId;
 
-  MessageModel({required this.message, required this.date, required this.uId});
+  MessageModel({
+    required this.message,
+    required this.date,
+    required this.uId,
+    required this.messageId,
+    required this.senderId,
+  });
 
-   MessageModel.fromJson(json){
-     message = json['message'];
-     date = (json['date'] as Timestamp).toDate();
-     uId = json['uId'];
-   }
+  factory MessageModel.fromJson(Map<String, dynamic> json) {
+    return MessageModel(
+      message: json['message'] ?? '',
+      date: (json['date'] as Timestamp).toDate().toLocal(),
+      uId: json['uId'] ?? '',
+      messageId: json['messageId'] ?? '',
+      senderId: json['senderId'] ?? '',
+    );
+  }
 
   Map<String, dynamic> toJson() {
     return {
       'message': message,
-      'date': date,
+      'date': Timestamp.fromDate(date),
       'uId': uId,
+      'messageId': messageId,
+      'senderId': senderId,
     };
   }
 }

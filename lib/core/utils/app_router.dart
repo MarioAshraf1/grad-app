@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:graduation_project/features/auth/views/login_view.dart';
 import 'package:graduation_project/features/auth/views/register_view.dart';
 import 'package:graduation_project/features/chat/views/chat_view.dart';
+import 'package:graduation_project/features/home/view_models/user_model.dart';
 import 'package:graduation_project/features/home/views/home_view.dart';
 abstract class AppRouter {
   static const kHomeView = '/homeView';
@@ -14,22 +15,25 @@ abstract class AppRouter {
     routes: <RouteBase>[
       GoRoute(
         path: '/',
-        builder: (c, state) => const LoginView(),
+        builder: (_, state) => const LoginView(),
       ),
       GoRoute(
         path: kChatView,
-        builder: (c, state) => const ChatView(),
+        builder: (_, state) {
+          final doctorModel = state.extra as UserModel;
+          return ChatView(doctorModel: doctorModel);
+        },
       ),
       GoRoute(
         path: kHomeView,
-        builder: (context, state) => const HomeView(),
+        builder: (_, state) => const HomeView(),
       ),
       GoRoute(
         path: kRegisterView,
-        builder: (context, state) => const RegisterView(),
+        builder: (_, state) => const RegisterView(),
       ),GoRoute(
         path: kLoginView,
-        builder: (context, state) => const LoginView(),
+        builder: (_, state) => const LoginView(),
       ),
     ],
   );

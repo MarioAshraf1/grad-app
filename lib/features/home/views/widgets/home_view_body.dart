@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:graduation_project/features/chat/chat_cubit/chat_cubit.dart';
 import '../../../auth/auth_cubit/auth_cubit.dart';
 import 'custom_home_view_app_bar.dart';
 import 'doctor_container.dart';
@@ -26,7 +25,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
 
   @override
   Widget build(BuildContext context) {
-    var auth = BlocProvider.of<AuthCubit>(context);
+    var auth = AuthCubit.get(context);
     double height = MediaQuery
         .of(context)
         .size
@@ -62,16 +61,13 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: auth.doctorsList.length,
-                      itemBuilder: (context, index) {
+                      itemBuilder: (_, index) {
                         final colorIndex = index % colorList.length;
                         return Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: BlocProvider(
-                            create: (context) => ChatCubit(),
-                            child: DoctorContainer(
-                              color: colorList[colorIndex],
-                              doctorModel: auth.doctorsList[index],
-                            ),
+                          child: DoctorContainer(
+                            color: colorList[colorIndex],
+                            doctorModel: auth.doctorsList[index],
                           ),
                         );
                       },

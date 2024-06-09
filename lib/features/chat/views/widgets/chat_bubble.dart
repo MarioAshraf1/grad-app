@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/features/chat/view_models/message_model.dart';
 class ChatBubble extends StatelessWidget {
-  const ChatBubble({super.key, required this.messageModel, });
   final MessageModel messageModel;
+  const ChatBubble({super.key, required this.messageModel, });
   @override
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.centerLeft,
       child: Container(
         padding:
-        const EdgeInsets.only(left: 10, right: 14, top: 32, bottom: 32),
+        const EdgeInsets.only(left: 10, right: 14, top: 28, bottom: 28),
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         decoration: const BoxDecoration(
             borderRadius: BorderRadius.only(

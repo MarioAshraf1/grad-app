@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:graduation_project/core/utils/app_router.dart';
 import 'package:graduation_project/core/utils/assets.dart';
-import 'package:graduation_project/features/chat/chat_cubit/chat_cubit.dart';
-
 import '../../view_models/user_model.dart';
 
 class DoctorContainer extends StatelessWidget {
@@ -74,10 +71,8 @@ class DoctorContainer extends StatelessWidget {
                         padding: EdgeInsets.zero,
 
                         // icon thatttttttttttttttttt onPressed
-
                         onPressed: () {
-                          BlocProvider.of<ChatCubit>(context).getMessages();
-                          GoRouter.of(context).push(AppRouter.kChatView);
+                          GoRouter.of(context).push(AppRouter.kChatView,extra: doctorModel);
                         },
                         icon: Icon(Icons.message_outlined, color: color),
                       ),

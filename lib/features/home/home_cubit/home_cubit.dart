@@ -1,19 +1,16 @@
-import 'dart:io';
 
-import 'package:bloc/bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:graduation_project/features/home/view_models/user_model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:graduation_project/features/home/views/widgets/home_view_body.dart';
 
 import '../views/chat_list_view.dart';
-import '../views/home_view.dart';
 
 part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
   HomeCubit() : super(HomeInitial());
+
+  static HomeCubit get(BuildContext context) => BlocProvider.of(context);
 
   // CollectionReference userCollection =
   //     FirebaseFirestore.instance.collection('users');
@@ -42,14 +39,14 @@ class HomeCubit extends Cubit<HomeState> {
   //   final docSnapshot = await userCollection.doc(uId).get();
   //   userModel = UserModel.fromJson(docSnapshot);
   // }
-  List<Widget>screens = [
-    HomeView(),
-    ChatListView(),
+  List<Widget> screens = [
+    const HomeViewBody(),
+    const ChatListView(),
   ];
   int currentIndex = 0;
-  void changeBottomNav(index){
+
+  void changeBottomNav(index) {
     currentIndex = index;
-
+    emit(ChangeBottomNavState());
   }
-
 }
